@@ -6,14 +6,16 @@ import WelcomeTitle from "./WelcomeTitle/WelcomeTitle";
 class WelcomeCard extends Component {
     render() {
         return (
-            <Grid container spacing={3}>
+            <Grid container spacing={3} style={{width: "100%"}}>
                 <Grid item xs={12}>
-                    <WelcomeTitle title={"Projeto Flashcard"} subtitle={"A forma mais fácil de aprender"}></WelcomeTitle>
+                    <WelcomeTitle title={"Projeto Flashcard"} 
+                        subtitle={"A forma mais fï¿½cil de aprender"}></WelcomeTitle>
                 </Grid>
-                <Grid item xs={6}>
-                    <TextField id={"login"} label={"User"} ></TextField>
+                <Grid item xs={12}>
+                    <div style={{textAlign: '-webkit-center'}}>
+                        {this.props.children}
+                    </div>
                 </Grid>
-                <Grid item xs={6}>Lado 2</Grid>
             </Grid>
         );
     }

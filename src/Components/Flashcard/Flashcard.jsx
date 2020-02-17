@@ -1,39 +1,48 @@
 import React, { Component } from "react";
-import {Paper} from "@material-ui/core";
 import PropTypes from "prop-types";
+import FlashcardFace from './FlashcardFace/FlashcardFace'
 
 import classes from "./Flashcard.css";
 
 class Flashcard extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            flipped: false
+        }
+    }
+    
+    onClickHandler() {
+        this.setState({flipped: !this.state.flipped});
+    }
+
     render() {
+        let innerCardStyle = this.state.flipped ? {transform: "rotateY(180deg)"} : {};
+    
         return (
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <Paper elevation={3}
-                            style={{
-                                width: this.props.width + "px",
-                                height: this.props.height + "px",
-                                backgroundColor: this.props.backgroundColor,
-                                color: "white",
-                                padding: '20px',
-                                margin: this.props.margin + 'px'
-                            }}>
-                                {this.props.children}
-                        </Paper>
+            <div className={"flip-card"}>
+                <div className={"flip-card-inner"} style={innerCardStyle}>
+                    <div className={"flip-card-front"}>
+                        <FlashcardFace width={this.props.width}
+                            height={this.props.height}
+                            margin={this.props.margin}
+                            backgroundColor={this.props.backgroundColor}
+                            color={"white"}
+                            onClickHandler={this.onClickHandler.bind(this)}
+                            flipped={this.state.flipped}>
+                            {this.props.frontFace}
+                        </FlashcardFace>
                     </div>
-                    <div class="flip-card-back">
-                        <Paper elevation={3}
-                            style={{
-                                width: this.props.width + "px",
-                                height: this.props.height + "px",
-                                backgroundColor: "white",
-                                color: "black",
-                                padding: '20px',
-                                margin: this.props.margin + 'px'
-                            }}>
-                                {this.props.children}
-                        </Paper>
+                    <div className={"flip-card-back"}>
+                        <FlashcardFace width={this.props.width}
+                            height={this.props.height}
+                            margin={this.props.margin}
+                            backgroundColor={"white"}
+                            color={"black"}
+                            flipped={this.state.flipped}>
+                                {this.props.backFace}
+                        </FlashcardFace>
                     </div>
                 </div>
             </div>
