@@ -4,8 +4,20 @@ import {Paper, TextField} from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
+import GlobalContext from '../../Context/globalContext';
 
 class Login extends Component {
+    onClick = (event, d) => {
+        console.log('passou aqui', this.context);
+        this.context = {
+            authUser: {
+                username: 'aaaaa',
+                password: 'bbbbb'
+            }
+        };
+
+    }
+
     render() {
         return (
             <Paper elevation={3}
@@ -35,6 +47,7 @@ class Login extends Component {
                         <Grid item xs={12}>
                             <Button variant="outlined" 
                                 color="primary"
+                                onClick={() => { this.onClick()}}
                                 style={{margin: '2px'}}>
                                 Entrar
                             </Button>
@@ -57,5 +70,7 @@ class Login extends Component {
         );
     }
 };
+
+Login.contextType = GlobalContext;
 
 export default Login;

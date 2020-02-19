@@ -22,7 +22,7 @@ class WelcomeTitle extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{marginTop: '5%'}}>
                 {this.getTitle()}
                 {this.getSubtitle()}
             </div>
