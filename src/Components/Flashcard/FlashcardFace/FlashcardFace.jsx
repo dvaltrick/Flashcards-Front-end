@@ -4,6 +4,13 @@ import {Paper} from "@material-ui/core";
 
 class FlashcardFace extends Component {
     render () {
+        let clonedFace = React.cloneElement(
+            this.props.children,
+            {flipCard: this.props.flipCard}
+        )
+
+        console.log(clonedFace);
+
         return (
             <Paper elevation={3}
                 style={{
@@ -14,7 +21,7 @@ class FlashcardFace extends Component {
                     padding: '20px',
                     margin: this.props.margin + 'px'
                 }}>
-                {this.props.children}  
+                {clonedFace}  
             </Paper>
         );
     }
