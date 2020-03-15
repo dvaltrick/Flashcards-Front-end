@@ -6,6 +6,60 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            userName: "",
+            password: ""
+        };
+    }
+
+    setToken(token) {
+        this.props.setToken(token);
+    }
+    
+    login() {
+        let me = this;
+        let userName = this.state.userName;
+        let password = this.state.password;
+
+        let loginObject = {
+            username: userName,
+            password: password
+        }
+
+        fetch("http://localhost:8080/login", 
+            {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(loginObject)
+            }
+        ).then(
+            function(response) {
+                console.log(response);
+                if ( response.status !== 200 ) {
+                    console.log('Status Code: ' +  response.status);
+                    return;
+                }
+            
+                let token = response.headers.get("Authorization");
+                
+                me.setToken(token);
+            }
+        );
+    }
+
+    handleChangeUserName(event) {
+        this.setState({userName: event.target.value});
+    }
+
+    handleChangePassword(event) {
+        this.setState({password: event.target.value});
+    }
+
     render() {
         return (
             <Paper elevation={3}
@@ -24,18 +78,23 @@ class Login extends Component {
                     <Grid container spacing={3} style={{width: "100%"}}>
                         <Grid item xs={12}>
                             <TextField id="txUser" 
-                                label="User" />
+                                label="User"
+                                value={this.state.userName}
+                                onChange={this.handleChangeUserName.bind(this)} />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField id="txPassword" 
                                 label="Password" 
                                 type="password"
-                                autoComplete="current-password" />
+                                autoComplete="current-password"
+                                value={this.state.password}
+                                onChange={this.handleChangePassword.bind(this)} />
                         </Grid>
                         <Grid item xs={12}>
                             <Button variant="outlined" 
                                 color="primary"
-                                style={{margin: '2px'}}>
+                                style={{margin: '2px'}}
+                                onClick={this.login.bind(this)}>
                                 Entrar
                             </Button>
                             <Button variant="outlined" color="secondary" style={{margin: '2px'}}>
